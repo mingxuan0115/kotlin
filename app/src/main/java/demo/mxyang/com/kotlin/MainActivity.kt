@@ -16,7 +16,6 @@ class MainActivity : AppCompatActivity() {
         val PHONENUMBER_ID: Int = 1
         val PASSWORD_ID: Int = 2
         val LOGIN_ID: Int = 3
-        val ID_BTN_LOGIN: Int = 4
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
