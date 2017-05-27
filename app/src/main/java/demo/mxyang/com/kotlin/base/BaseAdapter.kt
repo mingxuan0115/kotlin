@@ -27,7 +27,9 @@ class BaseAdapter<T>(val layoutResourceId: Int, var items: List<T>, val init: (V
         fun bindForecast(item: T) {
             with(item) {
                 init(itemView, item)
+
             }
         }
     }
+
 }

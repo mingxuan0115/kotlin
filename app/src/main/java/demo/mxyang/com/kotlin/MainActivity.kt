@@ -7,20 +7,31 @@ import android.text.InputType
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
+import demo.mxyang.com.kotlin.Oper.ListOper
+import demo.mxyang.com.kotlin.test.myMethod
+import demo.mxyang.com.kotlin.util.myToast
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.*
+import org.jetbrains.anko.custom.async
 import org.jetbrains.anko.custom.style
+import javax.xml.datatype.Duration
 
 class MainActivity : AppCompatActivity() {
+
     companion object static {
         val PHONENUMBER_ID: Int = 1
         val PASSWORD_ID: Int = 2
         val LOGIN_ID: Int = 3
+
+        val ZIP_CODE = "zipCode"
+        val DEFAULT_ZIP = "11"
     }
+
+    var zipCode: String by DelegatesExt.preference(this, ZIP_CODE, DEFAULT_ZIP)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main)
 //        loginUi().setContentView(this@MainActivity)
 //        text.text="aaaa"
 ////        text.setOnClickListener {   text.text="bbb" }
@@ -31,8 +42,9 @@ class MainActivity : AppCompatActivity() {
 //            editText { hint="passward" }
 //
 //        }
+        zipCode="aa"
 
-        linearLayout() {
+        verticalLayout() {
             val pass = editText {
                 hint = "请输入密码"
             }.lparams {
@@ -40,7 +52,13 @@ class MainActivity : AppCompatActivity() {
                 height = wrapContent
             }
             button("点击1") {
-                onClick { toast("click, ${pass.text}") }
+                onClick {
+                    myToast("click, ${zipCode}")
+                    myToast(message = "click", time = Toast.LENGTH_LONG)
+
+                    val listoper = ListOper()
+                    listoper.listOperetion()
+                }
 
             }.lparams {
                 width = matchParent
@@ -49,6 +67,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
 
     }
 
@@ -87,14 +110,14 @@ class MainActivity : AppCompatActivity() {
                         centerHorizontally()
                     }
                     editText {
-                        id=PASSWORD_ID
-                        inputType= InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                    }.lparams(width= matchParent,height = wrapContent){
+                        id = PASSWORD_ID
+                        inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    }.lparams(width = matchParent, height = wrapContent) {
                         below(PHONENUMBER_ID)
                     }
-                    button(ctx.getString(R.string.login)){
-                        id= LOGIN_ID
-                    }.lparams(width= wrapContent,height = wrapContent){
+                    button(ctx.getString(R.string.login)) {
+                        id = LOGIN_ID
+                    }.lparams(width = wrapContent, height = wrapContent) {
                         below(PASSWORD_ID)
                         centerHorizontally()
                     }
@@ -123,5 +146,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun MainActivity.toast(message: CharSequence, duration: Int = Toast.LENGTH_LONG) {
+        Toast.makeText(this, message, duration)
+    }
 
 }

@@ -34,11 +34,19 @@ class RecycleViewActivity : AppCompatActivity() {
             view.onClick { toast(item.title) }
             view.onLongClick { itemLongClick(item) }
         }
+        adapter = BaseAdapter(R.layout.item, news, { view: View, item: NewsBean ->
+
+            view.title.text = item.title
+            view.time.text = item.time
+            view.onClick { toast(item.title) }
+            view.onLongClick { itemLongClick(item) }
+        })
+
         recycle_view.adapter = adapter
         adapter!!.notifyDataSetChanged()
     }
 
-    fun itemLongClick(item:NewsBean):Boolean{
+    fun itemLongClick(item: NewsBean): Boolean {
         toast(item.time)
         return true
     }
